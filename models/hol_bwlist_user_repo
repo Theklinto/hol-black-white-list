@@ -1,0 +1,50 @@
+<?php
+use Hol_bwlist_user as Hol_User;
+use Hol_bwlist_mapper as Hol_Mapper;
+
+class Hol_bwlist_user_repo
+{
+    private $Users;
+    private wpdb $wpdb;
+    private $db_table = "hol_bwlist_users";
+
+    public function __construct()
+    {
+        global $wpdb;
+        $this->wpdb = $wpdb;
+    }
+
+    public function GetAllUsers()
+    {
+        $this->Users = $this->UpdateList();
+        return $this->Users;
+    }
+
+    private function UpdateList()
+    {
+        $users = [];
+        $sql = "SELECT * FROM $this->db_table";
+        $results = $this->wpdb->get_results($sql);
+
+
+        foreach ($results as $user) {
+            array_push($users, Hol_Mapper::MapUser($user));
+        }
+
+        return $users;
+    }
+
+    public function AddUser(Hol_User $user)
+    {
+        $user_array = [
+            'username' => $user->Username,
+            "user_rank" => $user->UserRank,
+            "positive_rating" => $user->PositiveRating,
+            "negative_rating" => $user->NegativeRating,
+            "total_rating" => $user->TotalRating
+        ];
+        
+        //Returns 0 for failure and 1 for success.
+        return $this->wpdb->insert($this->db_table, $user_array);
+    }
+}
