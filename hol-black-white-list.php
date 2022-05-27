@@ -16,8 +16,10 @@ include_once('menus/hol-bwlist-admin-menu.php');
 //Included models
 include_once('models/hol-bwlist-user.php');
 include_once('models/hol-bwlist-post.php');
-use Hol_bwlist_user as User;
-use Hol_bwlist_post as Post;
+include_once("models/hol_bwlist_user_repo");
+use Hol_bwlist_user as Hol_User;
+use Hol_bwlist_post as Hol_Post;
+use Hol_bwlist_user_repo as Hol_user_repo;
 
 //Included Helpers
 include_once('helpers/hol-bwlist-logger.php');
@@ -26,10 +28,7 @@ use Hol_bwlist_logger as Logger;
 //Globals
 $hol_bwlist_url = 'https://www.hardwareonline.dk/koebsalg.aspx?fid=11&tid=915294';
 
-add_action('admin_menu', 'test_log', 99);
 
-function test_log()
-{
-    $logger = new Logger();
-    $logger->log('Titel');
-}
+$user = new Hol_User("Guncityy", "Bruger");
+$repo = new Hol_user_repo();
+$repo->GetAllUsers();

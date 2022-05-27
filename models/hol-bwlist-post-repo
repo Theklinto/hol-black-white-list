@@ -1,0 +1,26 @@
+<?php
+
+class Hol_bwlist_post_repo
+{
+    private $Posts;
+    private wpdb $wpdb;
+    private $db_table = "hol_bwlist_posts";
+
+    public function __construct()
+    {
+        global $wpdb;
+        $this->wpdb = $wpdb;
+    }
+
+    public function GetAllPosts()
+    {
+        $this->UpdateList();
+        return $this->Posts;
+    }
+
+    private function UpdateList()
+    {
+        $sql = "SELECT * FROM $this->db_table";
+        $results = $this->wpdb->get_results($sql);
+    }
+}

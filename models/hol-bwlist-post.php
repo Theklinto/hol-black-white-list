@@ -1,9 +1,10 @@
 <?php
 
-use Hol_bwlist_user as User;
+use Hol_bwlist_user as Hol_User;
 
 class Hol_bwlist_post
 {
+    private int $id;
     public int $PostNumber;
     public DateTime $PostDate;
     public User $PostUser;
@@ -16,12 +17,19 @@ class Hol_bwlist_post
         $this->PostUser = $user;
         $this->PostContent = $content;
     }
+
     public function DisplayPostNumber()
     {
         return '#' . $this->PostNumber;
     }
+
     public function DisplayDate()
     {
         return $this->PostDate->format('d-m-Y H:i');
+    }
+    
+    public function GetId()
+    {
+        return $this->id;
     }
 }
